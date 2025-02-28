@@ -1,4 +1,3 @@
-# Documentation example
+# TDMC documentation source
 
-We use this example in the lesson
-[How to document your research software](https://coderefinery.github.io/documentation/).
+The website is available at: https://mpks.github.io/tdmc_docs/
