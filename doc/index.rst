@@ -11,3 +11,6 @@ TDMC Documentation
    :caption: Contents:
 
    pages/intro.rst
+   pages/examples.rst
+   pages/holstein_gap.rst
+   pages/holstein_scaling.rst
