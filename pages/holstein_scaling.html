@@ -1,0 +1,194 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Holstein model scaling &mdash; tdmc 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bc378ba9" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Holstein model gap" href="holstein_gap.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            tdmc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Installing tdmc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="holstein_gap.html">Holstein model gap</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Holstein model scaling</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tdmc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Holstein model scaling</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/pages/holstein_scaling.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="holstein-model-scaling">
+<h1>Holstein model scaling<a class="headerlink" href="#holstein-model-scaling" title="Link to this heading"></a></h1>
+<p>When writing the procedure for time evolution, the original
+1D Holstein Hamiltonian</p>
+<div class="math notranslate nohighlight">
+\[\hat{H} = -\gamma \sum_{i=1}^{N}
+          \left(
+              \hat{c}_{i}^\dagger\hat{c}_{i+1} + {\rm h.c.}
+          \right)
+          + g \sum_{i=1}^{N} Q_i\left(
+                                    \hat{c}_{i}^\dagger\hat{c}_{i} - 1/2
+                                \right)
+          + \frac{K}{2} \sum_{i=1}^{N} Q_i^2
+          + \frac{1}{2M} \sum_{i=1}^{N} P_{i}^2\]</div>
+<p>was scaled</p>
+<div class="math notranslate nohighlight">
+\[\hat{H} = -\gamma \sum_{i=1}^{N}
+          \left(
+              \hat{c}_{i}^\dagger\hat{c}_{i+1} + {\rm h.c.}
+          \right)
+          + \frac{g}{\sqrt{K}} \sum_{i=1}^{N} \tilde{Q}_i
+            \left(
+                  \hat{c}_{i}^\dagger\hat{c}_{i} - 1/2
+            \right)
+          + \frac{1}{2} \sum_{i=1}^{N} \tilde{Q}_i^2
+          + \frac{K}{2M} \sum_{i=1}^{N} \tilde{P}_{i}^2,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{Q}_{i} = \sqrt{K} Q_{i}\)</span>
+and <span class="math notranslate nohighlight">\(\tilde{P}_{i} = \frac{1}{\sqrt{K}} P_{i}\)</span>.
+By introducing new variables <span class="math notranslate nohighlight">\(\lambda =\frac{g^2}{4K\gamma}\)</span>
+and <span class="math notranslate nohighlight">\(\omega_{0} = \sqrt{K/M}\)</span> the given Hamiltonian transforms</p>
+<div class="math notranslate nohighlight">
+\[\hat{H} = -\gamma \sum_{i=1}^{N}
+          \left(
+                \hat{c}_{i}^\dagger\hat{c}_{i+1} + {\rm h.c.}
+          \right)
+          + 2\sqrt{\lambda \gamma} \sum_{i=1}^{N} \tilde{Q}_i\left(
+                     \hat{c}_{i}^\dagger\hat{c}_{i} - 1/2
+                     \right)
+          + \frac{1}{2} \sum_{i=1}^{N} \tilde{Q}_i^2
+          + \frac{\omega_{0}^2}{2} \sum_{i=1}^{N} \tilde{P}_{i}^2.\]</div>
+<p>If we substitute the initial phonon position
+<span class="math notranslate nohighlight">\(Q_i = \frac{1}{g}\Delta_i\)</span>, then
+<span class="math notranslate nohighlight">\(\tilde{Q}_i = \sqrt{K}Q_i = \frac{\sqrt{K}}{g}\Delta_i = \frac{1}{2\sqrt{\lambda\gamma}}\Delta_i\)</span> so the Hamiltonian transforms
+into</p>
+<div class="math notranslate nohighlight">
+\[\hat{H} = -\gamma \sum_{i=1}^{N}
+          \left(
+                \hat{c}_{i}^\dagger\hat{c}_{i+1} + {\rm h.c.}
+          \right)
+          + \sum_{i=1}^{N} \Delta_i\left(
+                     \hat{c}_{i}^\dagger\hat{c}_{i} - 1/2
+                     \right)
+          + \frac{1}{8\lambda\gamma} \sum_{i=1}^{N} \Delta_i^2
+          + \frac{\omega_{0}^2}{2} \sum_{i=1}^{N} \tilde{P}_{i}^2.\]</div>
+<p>The original system of equations of motion</p>
+<div class="math notranslate nohighlight">
+\[\frac{d}{dt} Q_i(t) = P_i(t)/M\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{d}{dt} P_i(t) = -K Q_i(t) - g(n_i(t) - 1/2)\]</div>
+<p>then transforms into</p>
+<div class="math notranslate nohighlight">
+\[\frac{d}{dt} \tilde{Q}_i(t) = \omega_0^2 \tilde{P}_i(t)\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{d}{dt} \tilde{P}_i(t) = -\tilde{Q}_i(t) -
+2\sqrt{\lambda\gamma}(n_i(t) - 1/2)\]</div>
+<p>Finally, using substitution
+<span class="math notranslate nohighlight">\(\tilde{Q}_i = \frac{1}{2\sqrt{\lambda\gamma}}\Delta_i\)</span> and
+<span class="math notranslate nohighlight">\(2\sqrt{\lambda\gamma}\tilde{P}_i = \pi_i\)</span>
+we get our final equations of motion for the Holstein model</p>
+<div class="math notranslate nohighlight">
+\[\frac{d}{dt} \Delta_i(t) = \omega_0^2 \pi_i(t)\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{d}{dt} \pi_i(t) = -\Delta_i(t) -
+4\lambda\gamma(n_i(t) - 1/2)\]</div>
+<p>Note that in the old Fortran code, for the zero temperature,
+the Hamiltonian was implemented using equations of motion with
+<span class="math notranslate nohighlight">\(\Delta_i\)</span> and <span class="math notranslate nohighlight">\(\pi_i\)</span>, while the code for the nonzero
+temperature was implemented using
+<span class="math notranslate nohighlight">\(\tilde{Q}_i\)</span> and <span class="math notranslate nohighlight">\(\tilde{P}_i\)</span>. The convention in the present
+package is to use the Hamiltonian defined in terms of
+<span class="math notranslate nohighlight">\(\tilde{Q}_i\)</span> and <span class="math notranslate nohighlight">\(\tilde{P}_i\)</span>. In the code they are
+represented as <code class="docutils literal notranslate"><span class="pre">qi</span></code> and <code class="docutils literal notranslate"><span class="pre">pi</span></code>. Additionally, in <code class="docutils literal notranslate"><span class="pre">holstein.py</span></code>
+there is a function <code class="docutils literal notranslate"><span class="pre">q0()</span></code> which returns the coordinate
+<span class="math notranslate nohighlight">\(\Delta_i\)</span>. This is used for comparison with the old code, but
+also because it represents the gap energy.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="holstein_gap.html" class="btn btn-neutral float-left" title="Holstein model gap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Marko Petrovic.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

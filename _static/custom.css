@@ -1,0 +1,22 @@
+/* Change the color of all code blocks */
+.highlight pre {
+    color: black;  /* Text color */
+    background-color: #e6f2e6;
+
+}
+
+/* Specific for bash code blocks */
+.highlight-bash pre {
+    color: black;
+    background-color: #e6f2e6;
+}
+
+span.caption-number {
+   /* color: blue */
+  font-weight: bold;
+}
+
+span.caption-number:after {
+   content: ". ";
+   margin-left: -0.20em;
+}

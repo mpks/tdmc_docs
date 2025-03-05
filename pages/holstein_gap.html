@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Holstein model gap &mdash; tdmc 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bc378ba9" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Holstein model scaling" href="holstein_scaling.html" />
+    <link rel="prev" title="Example scripts" href="examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            tdmc
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Installing tdmc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example scripts</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Holstein model gap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="holstein_scaling.html">Holstein model scaling</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tdmc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Holstein model gap</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/pages/holstein_gap.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="holstein-model-gap">
+<h1>Holstein model gap<a class="headerlink" href="#holstein-model-gap" title="Link to this heading"></a></h1>
+<p>The gap for the Holstein model at the zero temperature can be
+computed numerically. Starting from the Holstein Hamiltonian</p>
+<div class="math notranslate nohighlight">
+\[\hat{H} = -\gamma \sum_{i=1}^{N}
+          \left(
+            \hat{c}_{i}^\dagger\hat{c}_{i+1} + {\rm h.c.}
+          \right)
+          + \sum_{i=1}^{N} \Delta_i
+              \left(
+                  \hat{c}_{i}^\dagger\hat{c}_{i} - 1/2
+              \right)
+          + \frac{1}{8\lambda\gamma} \sum_{i=1}^{N} \Delta_i^2
+          + \frac{\omega_{0}^2}{2} \sum_{i=1}^{N} \tilde{P}_{i}^2.\]</div>
+<p>and we assume <span class="math notranslate nohighlight">\(\tilde{P}_i=0\)</span> for every <span class="math notranslate nohighlight">\(i\)</span>, with initial state
+set as <span class="math notranslate nohighlight">\(\Delta_i =(-1)^i\Delta\)</span>, we get</p>
+<div class="math notranslate nohighlight">
+\[\hat{H} = -\gamma \sum_{i=1}^{N}
+          \left(
+              \hat{c}_{i}^\dagger\hat{c}_{i+1} +
+              \hat{c}_{i+1}^\dagger\hat{c}_{i}
+          \right)
+          + \Delta \sum_{i=1}^{N} (-1)^i
+                     \hat{c}_{i}^\dagger\hat{c}_{i}
+          + \frac{1}{8\lambda\gamma} N\Delta^2\]</div>
+<p>We want to transform this Hamiltonian into the inverse
+space by transforming the annihilation and creation operators</p>
+<div class="math notranslate nohighlight">
+\[\hat{c}_{m}^\dagger =\frac{1}{\sqrt{N}}
+   \sum_{k} e^{-ikm}\hat{c}_k^\dagger,\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\hat{c}_{m} =\frac{1}{\sqrt{N}}
+   \sum_{k} e^{ikm}\hat{c}_k^\dagger.\]</div>
+<p>Assuming <span class="math notranslate nohighlight">\(\gamma\)</span> is real, the first term transforms into</p>
+<div class="math notranslate nohighlight">
+\[-\gamma\frac{1}{N}\sum_{m=1}^{N}
+ \sum_k\sum_{k'}
+ \left(
+       e^{-imk}e^{i(m+1)k'}\hat{c}^{\dagger}_{k}
+       \hat{c}_{k'}
+ +
+       e^{-i(m+1)k}e^{imk'}\hat{c}^{\dagger}_{k}
+       \hat{c}_{k'}
+ \right)\]</div>
+<p>or</p>
+<div class="math notranslate nohighlight">
+\[-\gamma\frac{1}{N}\sum_{m=1}^{N}
+\sum_k\sum_{k'}
+\left(
+     e^{-im(k-k')}e^{ik'}\hat{c}^{\dagger}_{k}
+     \hat{c}_{k'}
++
+     e^{-im(k-k')}e^{-ik}\hat{c}^{\dagger}_{k}
+     \hat{c}_{k'}
+\right)\]</div>
+<p>For large <span class="math notranslate nohighlight">\(N\)</span>, the Kronecker delta function can be written as</p>
+<div class="math notranslate nohighlight">
+\[\delta_{kk'} = \frac{1}{N}\sum_{m=1}^{N}e^{im(k-k')},\]</div>
+<p>where <span class="math notranslate nohighlight">\(k=\frac{2\pi}{N}r\)</span> and <span class="math notranslate nohighlight">\(k'=\frac{2\pi}{N}r'\)</span> and
+<span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(r'\)</span> are integers going from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(N-1\)</span>.
+The sums over
+<span class="math notranslate nohighlight">\(m\)</span> and <span class="math notranslate nohighlight">\(k'\)</span> in the first term disappear after the previous
+transformation and we get</p>
+<div class="math notranslate nohighlight">
+\[-\gamma \sum_k
+(e^{ik} + e^{-ik})\hat{c}^{\dagger}_{k}
+\hat{c}_{k}
+= -
+\sum_k (2\gamma\cos k) \hat{c}^{\dagger}_{k} \hat{c}_{k}\]</div>
+<p>The second term transforms as</p>
+<div class="math notranslate nohighlight">
+\[\Delta\sum_{m=1}^{N}(-1)^{m}\hat{c}^\dagger_{m}\hat{c}_{m}
+=
+\frac{1}{N}\sum_{m=1}^{N}
+\sum_{k}\sum_{k'}e^{-im(k-k')}e^{im\pi}\hat{c}_{k}^\dagger
+\hat{c}_{k} =
+\sum_{k}\sum_{k'}\delta_{k,k'+\pi}
+\hat{c}_{k}^\dagger\hat{c}_{k'} = \Delta\sum_{k}
+ \hat{c}_{k}^\dagger\hat{c}_{k+\pi}\]</div>
+<p>Here, the vector <span class="math notranslate nohighlight">\(k\)</span> runs from zero to <span class="math notranslate nohighlight">\(2\pi\)</span> in discrete steps
+of <span class="math notranslate nohighlight">\(\frac{2\pi}{N}\)</span>. Due to the periodicity of the Brillouin
+zone, and the fact that for <span class="math notranslate nohighlight">\(k\)</span>-s above <span class="math notranslate nohighlight">\(\pi\)</span> we have
+<span class="math notranslate nohighlight">\(k+\pi \rightarrow k-\pi\)</span>, the above sum can be divided into
+two sums</p>
+<div class="math notranslate nohighlight">
+\[\Delta \left(\sum_{k\le\pi}\hat{c}^\dagger_{k}\hat{c}_{k+\pi}
+             +
+             \sum_{k&gt;\pi}\hat{c}^\dagger_{k}\hat{c}_{k+\pi}
+       \right) =
+\Delta \left(\sum_{k\le\pi}\hat{c}^\dagger_{k}\hat{c}_{k+\pi}
+             +
+             \sum_{k&gt;\pi}\hat{c}^\dagger_{k}\hat{c}_{k-\pi}
+       \right) =\]</div>
+<div class="math notranslate nohighlight">
+\[\Delta \left(\sum_{k\le\pi}\hat{c}^\dagger_{k}\hat{c}_{k+\pi}
+             +
+             \sum_{k\le\pi}\hat{c}^\dagger_{k+\pi}\hat{c}_{k}
+       \right)\]</div>
+<p>In a similar way, assuming <span class="math notranslate nohighlight">\(\epsilon(k)=-2\gamma\cos k\)</span> the
+sum for the onsite terms can be divided into two parts</p>
+<div class="math notranslate nohighlight">
+\[\sum_{k\le\pi}\epsilon(k)\hat{c}^\dagger_{k}\hat{c}_{k}
+    +
+\sum_{k&gt;\pi}\epsilon(k)\hat{c}^\dagger_{k}\hat{c}_{k} =
+\sum_{k\le\pi}\epsilon(k)\hat{c}^\dagger_{k}\hat{c}_{k}
++
+\sum_{k\le\pi}\epsilon(k+\pi)\hat{c}^\dagger_{k+\pi}
+ \hat{c}_{k+\pi} =\]</div>
+<div class="math notranslate nohighlight">
+\[\sum_{k\le\pi}\epsilon(k)\hat{c}^\dagger_{k}\hat{c}_{k}
+-\sum_{k\le\pi}\epsilon(k)\hat{c}^\dagger_{k+\pi}
+ \hat{c}_{k+\pi}\]</div>
+<p>The last sign change comes from the fact that
+<span class="math notranslate nohighlight">\(\cos(k+\pi) = -\cos k\)</span>. Since all sums now run for <span class="math notranslate nohighlight">\(k&lt;\pi\)</span> the
+Brillouin zone is now reduced and the Hamiltonian can be
+written as a <span class="math notranslate nohighlight">\(2\times 2\)</span> matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\sum_{k\le\pi}
+\begin{pmatrix} \hat{c}_{k}^\dagger &amp; \hat{c}_{k+\pi}
+\end{pmatrix}
+\begin{pmatrix} \epsilon(k) &amp; \Delta \\
+                \Delta &amp; -\epsilon(k)
+\end{pmatrix}
+\begin{pmatrix} \hat{c}_{k} \\
+                \hat{c}_{k+\pi}
+\end{pmatrix}\end{split}\]</div>
+<p>For each <span class="math notranslate nohighlight">\(k\)</span> the matrix can be diagonalized and the
+eigenenergies can be computed</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}{\rm det}
+\begin{vmatrix} \epsilon(k) -\lambda_k &amp; \Delta \\
+              \Delta &amp; -\epsilon(k) - \lambda_k
+\end{vmatrix}
+= -(\epsilon(k) - \lambda_k)(\epsilon(k) + \lambda_k) -
+\Delta^2 = \lambda_k^2 - \epsilon(k)^2 - \Delta^2 = 0.\end{split}\]</div>
+<p>From here we get the eigen energies as</p>
+<div class="math notranslate nohighlight">
+\[\lambda_{k,\pm} = \pm \sqrt{\epsilon(k)^2 + \Delta^2}.\]</div>
+<p>This corresponds to two bands for each <span class="math notranslate nohighlight">\(k\)</span>, and the bands are
+separated by the gap <span class="math notranslate nohighlight">\(2\Delta\)</span> at <span class="math notranslate nohighlight">\(k = \pi\)</span>.
+The total energy for a half-filled system is then obtained by
+summing over the lower band and adding the extra constant</p>
+<div class="math notranslate nohighlight">
+\[E_{\rm tot} = -\sum_{k\le\pi} \sqrt{\epsilon(k)^2 + \Delta^2} +
+ \frac{N\Delta^2}{8\lambda\gamma}\]</div>
+<p>The band gap <span class="math notranslate nohighlight">\(\Delta\)</span> for a given coupling <span class="math notranslate nohighlight">\(\lambda\)</span> can be
+determined by minimizing the derivative of total energy
+<span class="math notranslate nohighlight">\(\partial E_{\rm tot} /\partial \Delta\)</span> with respect to
+<span class="math notranslate nohighlight">\(\Delta\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial E_{\rm tot}}{\partial \Delta} =
+-\sum_{k&lt;\pi}
+  \frac{\Delta}{\sqrt{\epsilon(k)^2 + \Delta^2}}
+  +
+  \frac{N\Delta}{4\lambda\gamma} = 0\]</div>
+<p>From here we get two solutions for the gap, one is
+<span class="math notranslate nohighlight">\(\Delta = 0\)</span> which we discard. The other is</p>
+<div class="math notranslate nohighlight">
+\[\sum_{k\le\pi}
+\frac{1}{N}
+\frac{4\lambda\gamma}{\sqrt{\epsilon(k)^2 + \Delta^2}} - 1 = 0\]</div>
+<p>The gap is computed numerically. We set the upper and lower
+limit for the gap <span class="math notranslate nohighlight">\(\Delta_{\rm max}\)</span> and
+<span class="math notranslate nohighlight">\(\Delta_{\rm min}\)</span> and compute the derivative using the previous
+equation. If the derivative is negative, the <span class="math notranslate nohighlight">\(\Delta\)</span> needs to
+get smaller (because the derivative scales as
+<span class="math notranslate nohighlight">\(\frac{1}{\Delta}\)</span>), on the other end, if the derivative is
+positive, the <span class="math notranslate nohighlight">\(\Delta\)</span> needs to increase. By moving the limits
+<span class="math notranslate nohighlight">\(\Delta_{\rm min}\)</span> and <span class="math notranslate nohighlight">\(\Delta_{\rm max}\)</span> we compute the
+<span class="math notranslate nohighlight">\(\Delta\)</span> which gives the zero of the first energy derivative.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples.html" class="btn btn-neutral float-left" title="Example scripts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="holstein_scaling.html" class="btn btn-neutral float-right" title="Holstein model scaling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Marko Petrovic.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
